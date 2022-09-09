@@ -1,18 +1,55 @@
-print("*********************************")
-print("Bem vindo no jogo de Adivinhação!")
-print("*********************************")
+import random
 
-numero_secreto = 42
+print("*****************************************")
+print("*** Bem vindo no jogo de Adivinhação! ***")
+print("*****************************************")
 
-chute_str =  input("Digite o seu numero: ")
+numero_secreto = round(random.random() * 100)  #0.0 = 1.0
+total_de_tentativas = 0
+pontos = 1000
 
-print ("Você digitou ", chute_str)
+print("> Qual o nível de dificuldade?")
+print(">> (1) Fácil (2) Médio (3) Difícil")
 
-chute = int(chute_str)
+nivel = int(input(">>> Definir o nível: "))
 
-if numero_secreto == chute :
-    print("Você acertou!")
+if nivel == 1:
+    total_de_tentativas = 20
+elif nivel == 2:
+    total_de_tentativas = 10
 else:
-    print("Você errou!")
+    total_de_tentativas = 5
 
-print("---Fim do jogo!---")
+for rodada in range(1,total_de_tentativas +1):
+
+    print(">> Tentativa {} de {} <<".format(rodada, total_de_tentativas))
+    chute_str =  input("Digite o seu número entre 1 e 100: ")
+
+    print ("Você digitou ", chute_str)
+
+    chute = int(chute_str)
+
+    if chute < 1 or chute > 100:
+        print("Você deve digitarm um número entre 1 e 100!")
+        continue
+
+    acertou = numero_secreto == chute
+    maior = chute > numero_secreto
+    menor = chute < numero_secreto
+
+    if acertou :
+        print("Você acertou e fez {} pontos!".format(pontos))
+        break
+    else:
+        if maior:
+            print("Você errou! Seu chute foi MAIOR que o número secreto!")
+        elif menor:
+            print("Você errou! Seu chute foi MENOR que o número secreto!")
+
+        if rodada == total_de_tentativas:
+            print("O número secreto era {}. Você fez {} pontos.".format(numero_secreto, pontos))
+
+        pontos_perdidos = abs(numero_secreto - chute)
+        pontos = pontos - pontos_perdidos
+
+
