@@ -1,53 +1,55 @@
-class Filme:
-    def __init__(self,nome, ano, duracao):
-        self.__nome = nome.title()
+class Programa:
+    def __init__(self, nome, ano):
+        self._nome = nome.title()
         self.ano = ano
-        self.duracao = duracao
-        self.__likes = 0
+        self._likes = 0
 
     @property
     def likes(self):
-        return self.__likes
+        return self._likes
 
     def dar_like(self):
-        self.__likes += 1
+        self._likes += 1
 
     @property
     def nome(self):
-        return self.__nome
+        return self._nome
 
     @nome.setter
     def nome(self,novo_nome):
-        self.__nome = novo_nome.title()
+        self._nome = novo_nome.title()
 
+    def imprime(self):
+        print(f' {self._nome} - {self.ano} - {programa._likes}')
 
-class Serie:
+class Filme(Programa):
+    def __init__(self,nome, ano, duracao):
+        super().__init__(nome, ano)
+        self.duracao = duracao
+
+    def imprime(self):
+        print(f' {self._nome} - {self.ano} - {self.duracao} min - {self._likes} likes')
+
+class Serie(Programa):
     def __init__(self, nome, ano, temporadas):
-        self.__nome = nome.title()
-        self.ano = ano
+        super().__init__(nome, ano)
         self.temporadas = temporadas
-        self.__likes = 0
 
-    @property
-    def likes(self):
-        return self.__likes
+    def imprime(self):
+        print(f' {self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} likes')
 
-    def dar_like(self):
-        self.__likes += 1
-
-    @property
-    def nome(self):
-        return self.__nome
-
-    @nome.setter
-    def nome(self, novo_nome):
-        self.__nome = novo_nome.title()
 
 vingadores = Filme('Vingadores - guerra infinita',2018,160)
 vingadores.dar_like()
-print(f'Nome: {vingadores.nome} - Ano: {vingadores.ano} - Duração: {vingadores.duracao} - Likes: {vingadores.likes}')
+print(f' {vingadores.nome} -  {vingadores.ano} - {vingadores.likes}')
 
 atlanta = Serie('Atlanta',2018, 2)
 atlanta.dar_like()
 atlanta.dar_like()
-print(f'Nome: {atlanta.nome} - Ano : {atlanta.ano} - Temporadas: {atlanta.temporadas} - Likes: {atlanta.likes}')
+print(f' {atlanta.nome} - {atlanta.ano} - {atlanta.likes}')
+
+
+filmes_e_series = [vingadores,atlanta]
+
+for programa in filmes_e_series:
+    programa.imprime()
