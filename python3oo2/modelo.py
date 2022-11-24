@@ -1,3 +1,20 @@
+class Playlist:
+    def __init__(self, nome, programas):
+        self.nome = nome
+        self._programas = programas
+        #super().__init__(programas)
+
+    def __getitem__(self, item):
+        return self._programas[item]
+    @property
+    def listagem(self):
+        return self._programas
+
+    def __len__(self):
+        return len(self._programas)
+
+
+
 class Programa:
     def __init__(self, nome, ano):
         self._nome = nome.title()
@@ -19,37 +36,55 @@ class Programa:
     def nome(self,novo_nome):
         self._nome = novo_nome.title()
 
-    def imprime(self):
-        print(f' {self._nome} - {self.ano} - {programa._likes}')
+    def __str__(self):
+        return f' {self._nome} - {self.ano} - {programa._likes}'
 
 class Filme(Programa):
     def __init__(self,nome, ano, duracao):
         super().__init__(nome, ano)
         self.duracao = duracao
 
-    def imprime(self):
-        print(f' {self._nome} - {self.ano} - {self.duracao} min - {self._likes} likes')
+    def __str__(self):
+        return f' {self._nome} - {self.ano} - {self.duracao} min - {self._likes} likes'
+
+    def __repr__(self):
+        return f'Filme(nome={self.nome}, ano={self.ano}, duracao={self.duracao}, likes={self.likes})'
 
 class Serie(Programa):
     def __init__(self, nome, ano, temporadas):
         super().__init__(nome, ano)
         self.temporadas = temporadas
 
-    def imprime(self):
-        print(f' {self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} likes')
+    def __str__(self):
+        return f' {self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} likes'
+
+    def __repr__(self):
+        return f'Serie(nome={self.nome}, ano={self.ano}, temporadas={self.temporadas}, likes={self.likes})'
 
 
 vingadores = Filme('Vingadores - guerra infinita',2018,160)
-vingadores.dar_like()
-print(f' {vingadores.nome} -  {vingadores.ano} - {vingadores.likes}')
-
 atlanta = Serie('Atlanta',2018, 2)
+tmep = Filme('todo mundo em pânico',1999,100)
+demolidor = Serie('Demolidor', 2016, 2)
+
+vingadores.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
 atlanta.dar_like()
 atlanta.dar_like()
-print(f' {atlanta.nome} - {atlanta.ano} - {atlanta.likes}')
 
+filmes_e_series = [vingadores, atlanta, demolidor, tmep]
 
-filmes_e_series = [vingadores,atlanta]
+playlist_fim_de_semana = Playlist('fim de semana', filmes_e_series)
 
-for programa in filmes_e_series:
-    programa.imprime()
+print(f' > Tamanho do playlist: {len(playlist_fim_de_semana)}')
+
+for programa in playlist_fim_de_semana:
+    print(programa)
+#    print(repr(programa))
+
+#print(f'Tá ou não tá? {demolidor in playlist_fim_de_semana}')
